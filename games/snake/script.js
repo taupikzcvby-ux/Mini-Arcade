@@ -19,47 +19,33 @@ let food = {
     y: 10
 };
 
-let direction = {
-    x: 1,
-    y: 0
-};
-
-let nextDirection = {
-    x: 1,
-    y: 0
-};
+let direction = "right";
+let nextDirection = "right";
 
 let score = 0;
 let gameOver = false;
 
-let gameLoop;
 
-
-// ============================
+// ======================
 // GAMBAR SNAKE
-// ============================
+// ======================
 
 function drawSnake() {
 
-    // Hapus bagian snake lama
-    const oldSegments = document.querySelectorAll(".snake-segment");
-
-    oldSegments.forEach(segment => {
+    document.querySelectorAll(".snake-segment").forEach(segment => {
         segment.remove();
     });
 
-    // Kepala
     const head = snake[0];
 
     snakeElement.style.left = (head.x * 5) + "%";
     snakeElement.style.top = (head.y * 5) + "%";
 
-    // Badan
     for (let i = 1; i < snake.length; i++) {
 
         const segment = document.createElement("div");
 
-        segment.classList.add("snake-segment");
+        segment.className = "snake-segment";
 
         segment.style.left = (snake[i].x * 5) + "%";
         segment.style.top = (snake[i].y * 5) + "%";
@@ -69,9 +55,9 @@ function drawSnake() {
 }
 
 
-// ============================
+// ======================
 // GAMBAR MAKANAN
-// ============================
+// ======================
 
 function drawFood() {
 
@@ -80,32 +66,30 @@ function drawFood() {
 }
 
 
-// ============================
-// BUAT MAKANAN BARU
-// ============================
+// ======================
+// MAKANAN BARU
+// ======================
 
-function createFood() {
+function newFood() {
 
-    let validPosition = false;
-
-    while (!validPosition) {
-
+    do {
         food.x = Math.floor(Math.random() * gridSize);
         food.y = Math.floor(Math.random() * gridSize);
 
-        validPosition = !snake.some(segment =>
-            segment.x === food.x &&
-            segment.y === food.y
-        );
-    }
+    } while (
+        snake.some(part =>
+            part.x === food.x &&
+            part.y === food.y
+        )
+    );
 
     drawFood();
 }
 
 
-// ============================
-// GERAK SNAKE
-// ============================
+// ======================
+// GERAK
+// ======================
 
 function moveSnake() {
 
@@ -113,48 +97,71 @@ function moveSnake() {
 
     direction = nextDirection;
 
-    const head = snake[0];
-
-    const newHead = {
-        x: head.x + direction.x,
-        y: head.y + direction.y
+    let head = {
+        x: snake[0].x,
+        y: snake[0].y
     };
 
-    // Tabrak tembok
+
+    if (direction === "up") {
+        head.y--;
+    }
+
+    if (direction === "down") {
+        head.y++;
+    }
+
+    if (direction === "left") {
+        head.x--;
+    }
+
+    if (direction === "right") {
+        head.x++;
+    }
+
+
+    // Tabrak dinding
+
     if (
-        newHead.x < 0 ||
-        newHead.x >= gridSize ||
-        newHead.y < 0 ||
-        newHead.y >= gridSize
+        head.x < 0 ||
+        head.x >= gridSize ||
+        head.y < 0 ||
+        head.y >= gridSize
     ) {
         endGame();
         return;
     }
 
-    // Tabrak badan sendiri
-    const hitSelf = snake.some(segment =>
-        segment.x === newHead.x &&
-        segment.y === newHead.y
-    );
 
-    if (hitSelf) {
-        endGame();
-        return;
+    // Tabrak badan
+
+    for (let i = 0; i < snake.length; i++) {
+
+        if (
+            head.x === snake[i].x &&
+            head.y === snake[i].y
+        ) {
+            endGame();
+            return;
+        }
     }
 
-    snake.unshift(newHead);
 
-    // Makan makanan
+    snake.unshift(head);
+
+
+    // Makan
+
     if (
-        newHead.x === food.x &&
-        newHead.y === food.y
+        head.x === food.x &&
+        head.y === food.y
     ) {
 
         score += 10;
 
         scoreText.textContent = score;
 
-        createFood();
+        newFood();
 
     } else {
 
@@ -162,71 +169,116 @@ function moveSnake() {
 
     }
 
+
     drawSnake();
 }
 
 
-// ============================
+// ======================
 // GANTI ARAH
-// ============================
+// ======================
 
 function changeDirection(newDirection) {
 
     if (gameOver) return;
 
-    if (newDirection === "up") {
 
-        if (direction.y === 0) {
-            nextDirection = {
-                x: 0,
-                y: -1
-            };
-        }
-
+    if (newDirection === "up" && direction !== "down") {
+        nextDirection = "up";
     }
 
-    else if (newDirection === "down") {
-
-        if (direction.y === 0) {
-            nextDirection = {
-                x: 0,
-                y: 1
-            };
-        }
-
+    if (newDirection === "down" && direction !== "up") {
+        nextDirection = "down";
     }
 
-    else if (newDirection === "left") {
-
-        if (direction.x === 0) {
-            nextDirection = {
-                x: -1,
-                y: 0
-            };
-        }
-
+    if (newDirection === "left" && direction !== "right") {
+        nextDirection = "left";
     }
 
-    else if (newDirection === "right") {
-
-        if (direction.x === 0) {
-            nextDirection = {
-                x: 1,
-                y: 0
-            };
-        }
-
+    if (newDirection === "right" && direction !== "left") {
+        nextDirection = "right";
     }
 }
 
 
-// ============================
+// ======================
 // KEYBOARD
-// ============================
+// ======================
 
 document.addEventListener("keydown", function(event) {
 
-    const key = event.key.toLowerCase();
-
     if (
-        key === "
+        event.key === "ArrowUp" ||
+        event.key.toLowerCase() === "w"
+    ) {
+        event.preventDefault();
+        changeDirection("up");
+    }
+
+    else if (
+        event.key === "ArrowDown" ||
+        event.key.toLowerCase() === "s"
+    ) {
+        event.preventDefault();
+        changeDirection("down");
+    }
+
+    else if (
+        event.key === "ArrowLeft" ||
+        event.key.toLowerCase() === "a"
+    ) {
+        event.preventDefault();
+        changeDirection("left");
+    }
+
+    else if (
+        event.key === "ArrowRight" ||
+        event.key.toLowerCase() === "d"
+    ) {
+        event.preventDefault();
+        changeDirection("right");
+    }
+
+});
+
+
+// ======================
+// GAME OVER
+// ======================
+
+function endGame() {
+
+    gameOver = true;
+
+    finalScore.textContent = score;
+
+    gameOverScreen.style.display = "flex";
+}
+
+
+// ======================
+// RESTART
+// ======================
+
+function restartGame() {
+    location.reload();
+}
+
+
+// ======================
+// KEMBALI
+// ======================
+
+function goBack() {
+    window.location.href = "../../index.html";
+}
+
+
+// ======================
+// MULAI
+// ======================
+
+drawSnake();
+drawFood();
+
+setInterval(moveSnake, 150);
