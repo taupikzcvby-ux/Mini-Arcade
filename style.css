@@ -6,117 +6,251 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #0b0b14;
+    background: #08080f;
     color: white;
     min-height: 100vh;
 }
 
-.header {
+.arcade {
+    width: 92%;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
     text-align: center;
-    padding: 60px 20px 40px;
-    background: #111122;
-    border-bottom: 2px solid #29294a;
+    padding: 30px 0 45px;
 }
 
-.header h1 {
-    font-size: 42px;
-    letter-spacing: 4px;
-    margin-bottom: 10px;
-}
-
-.header p {
+.badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #444466;
+    border-radius: 20px;
     color: #aaa;
-    font-size: 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
 }
 
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
+.hero h1 {
+    font-size: clamp(45px, 10vw, 90px);
+    line-height: 0.9;
+    letter-spacing: -3px;
+    margin-bottom: 25px;
 }
 
-.container h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 28px;
+.hero p {
+    max-width: 500px;
+    margin: auto;
+    color: #888;
+    line-height: 1.6;
 }
 
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+
+/* =========================
+   GAME LIST
+========================= */
+
+.games {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #777;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+
+/* =========================
+   GAME CARD
+========================= */
 
 .game-card {
-    background: #151525;
-    border: 1px solid #2d2d4d;
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 20px;
+
+    background: #11111c;
+    border: 1px solid #29293d;
+    border-radius: 16px;
+
     transition: 0.2s;
 }
 
 .game-card:hover {
-    transform: translateY(-6px);
-    border-color: #7777ff;
+    transform: translateY(-3px);
+    border-color: #555577;
 }
+
+
+/* =========================
+   ICON
+========================= */
 
 .game-icon {
-    font-size: 60px;
-    margin-bottom: 15px;
+    width: 75px;
+    height: 75px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #1b1b2a;
+    border-radius: 14px;
+
+    font-size: 40px;
 }
 
-.game-card h3 {
-    font-size: 23px;
-    margin-bottom: 10px;
+
+/* =========================
+   GAME INFO
+========================= */
+
+.game-info {
+    flex: 1;
 }
 
-.game-card p {
-    color: #aaa;
-    min-height: 40px;
-    margin-bottom: 20px;
+.game-info h2 {
+    font-size: 21px;
+    margin-bottom: 7px;
 }
 
-button {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 8px;
-    background: #5b5bf7;
-    color: white;
-    font-size: 16px;
+.game-info p {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 9px;
+}
+
+.status {
+    color: #6ee56e;
+    font-size: 11px;
     font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.status.locked {
+    color: #777;
+}
+
+
+/* =========================
+   PLAY BUTTON
+========================= */
+
+.play-button {
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    background: white;
+    color: #08080f;
+
+    font-size: 13px;
+    font-weight: bold;
+
     cursor: pointer;
+
     transition: 0.2s;
 }
 
-button:hover {
-    background: #7777ff;
-    transform: scale(1.02);
+.play-button:hover {
+    transform: scale(1.05);
 }
+
+.play-button:active {
+    transform: scale(0.95);
+}
+
+.play-button.disabled {
+    background: #29293a;
+    color: #777;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   COMING SOON
+========================= */
+
+.coming-soon {
+    opacity: 0.65;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
     text-align: center;
-    color: #666;
-    padding: 30px;
-    margin-top: 30px;
+    padding: 45px 0 15px;
+
+    color: #555;
+    font-size: 12px;
 }
 
-@media (max-width: 650px) {
 
-    .header {
-        padding: 45px 15px 30px;
+/* =========================
+   HP / MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .arcade {
+        width: 92%;
+        padding-top: 25px;
     }
 
-    .header h1 {
-        font-size: 30px;
+    .hero {
+        padding-bottom: 30px;
     }
 
-    .game-grid {
-        grid-template-columns: 1fr;
+    .hero h1 {
+        font-size: 55px;
     }
 
     .game-card {
-        padding: 25px;
+        gap: 13px;
+        padding: 14px;
     }
-}
+
+    .game-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+
+    .game-info h2 {
+        font-size: 17px;
+    }
+
+    .game-info p {
+        font-size: 12px;
+    }
+
+    .play-button {
+        padding: 10px 13px;
+        font-size: 11px;
+    }
+    }
