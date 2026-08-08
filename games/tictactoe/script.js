@@ -1,4 +1,3 @@
-const boardElement = document.getElementById("board");
 const cells = document.querySelectorAll(".cell");
 const turnText = document.getElementById("turn");
 const resultText = document.getElementById("result");
@@ -24,28 +23,29 @@ const winningCombinations = [
     [2, 4, 6]
 ];
 
-boardElement.addEventListener("click", function(event) {
 
-    const cell = event.target.closest(".cell");
+cells.forEach(function(cell) {
 
-    if (!cell) {
-        return;
-    }
+    cell.addEventListener("click", function() {
 
-    const index = Array.from(cells).indexOf(cell);
+        const index = Number(cell.dataset.index);
 
-    if (index === -1) {
-        return;
-    }
+        if (!gameActive) {
+            return;
+        }
 
-    if (!gameActive || board[index] !== "") {
-        return;
-    }
+        if (board[index] !== "") {
+            return;
+        }
 
-    board[index] = currentPlayer;
-    cell.textContent = currentPlayer;
+        board[index] = currentPlayer;
 
-    checkWinner();
+        cell.textContent = currentPlayer;
+
+        checkWinner();
+
+    });
+
 });
 
 
@@ -64,7 +64,7 @@ function checkWinner() {
         ) {
 
             resultText.textContent =
-                `Player ${currentPlayer} MENANG!`;
+                "Player " + currentPlayer + " MENANG!";
 
             turnText.textContent = "Game selesai";
 
@@ -73,6 +73,7 @@ function checkWinner() {
             return;
         }
     }
+
 
     if (!board.includes("")) {
 
@@ -85,18 +86,16 @@ function checkWinner() {
         return;
     }
 
+
     currentPlayer =
         currentPlayer === "X" ? "O" : "X";
 
     turnText.textContent =
-        `Giliran Player ${currentPlayer}`;
+        "Giliran Player " + currentPlayer;
 }
 
 
-restartButton.addEventListener("click", restartGame);
-
-
-function restartGame() {
+restartButton.addEventListener("click", function() {
 
     board = [
         "", "", "",
@@ -114,4 +113,4 @@ function restartGame() {
     turnText.textContent = "Giliran Player X";
 
     resultText.textContent = "";
-        }
+});
