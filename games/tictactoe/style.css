@@ -79,14 +79,18 @@ h1 {
 
 .board {
     width: min(90vw, 420px);
-    aspect-ratio: 1 / 1;
+    height: min(90vw, 420px);
 
     margin: 0 auto;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
     gap: 10px;
-}
+
+    position: relative;
+    }
 
 
 /* CELL */
