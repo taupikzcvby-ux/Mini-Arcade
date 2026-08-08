@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake - Mini Arcade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+    <div class="game-container">
+
+        <div class="top-bar">
+            <button class="back-button" onclick="goBack()">← Arcade</button>
+
+            <div class="score">
+                SCORE: <span id="score">0</span>
+            </div>
+        </div>
+
+        <h1>🐍 SNAKE</h1>
+
+        <div id="game-board">
+            <div id="snake"></div>
+            <div id="food">●</div>
+        </div>
+
+        <div class="controls">
+
+            <button class="control up" onclick="changeDirection('up')">
+                ▲
+            </button>
+
+            <div class="middle-controls">
+                <button onclick="changeDirection('left')">
+                    ◀
+                </button>
+
+                <button onclick="changeDirection('down')">
+                    ▼
+                </button>
+
+                <button onclick="changeDirection('right')">
+                    ▶
+                </button>
+            </div>
+
+        </div>
+
+        <div id="game-over">
+            <h2>GAME OVER</h2>
+            <p>Score: <span id="final-score">0</span></p>
+
+            <button onclick="restartGame()">
+                MAIN LAGI
+            </button>
+        </div>
+
+        <p class="instruction">
+            Gunakan tombol arah atau keyboard WASD / Arrow
+        </p>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+              </html>
