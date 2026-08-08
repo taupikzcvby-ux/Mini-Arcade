@@ -24,29 +24,59 @@ const winningCombinations = [
 ];
 
 
-cells.forEach(function(cell) {
+cells[0].onclick = function() {
+    makeMove(0);
+};
 
-    cell.addEventListener("click", function() {
+cells[1].onclick = function() {
+    makeMove(1);
+};
 
-        const index = Number(cell.dataset.index);
+cells[2].onclick = function() {
+    makeMove(2);
+};
 
-        if (!gameActive) {
-            return;
-        }
+cells[3].onclick = function() {
+    makeMove(3);
+};
 
-        if (board[index] !== "") {
-            return;
-        }
+cells[4].onclick = function() {
+    makeMove(4);
+};
 
-        board[index] = currentPlayer;
+cells[5].onclick = function() {
+    makeMove(5);
+};
 
-        cell.textContent = currentPlayer;
+cells[6].onclick = function() {
+    makeMove(6);
+};
 
-        checkWinner();
+cells[7].onclick = function() {
+    makeMove(7);
+};
 
-    });
+cells[8].onclick = function() {
+    makeMove(8);
+};
 
-});
+
+function makeMove(index) {
+
+    if (!gameActive) {
+        return;
+    }
+
+    if (board[index] !== "") {
+        return;
+    }
+
+    board[index] = currentPlayer;
+
+    cells[index].textContent = currentPlayer;
+
+    checkWinner();
+}
 
 
 function checkWinner() {
