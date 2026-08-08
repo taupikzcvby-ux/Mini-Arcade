@@ -8,6 +8,10 @@ function openGame(game) {
         window.location.href = "games/snake/index.html";
     }
 
+   else if (game === "tictactoe") {
+    window.location.href = "games/tictactoe/index.html";
+   }
+       
     else if (game === "shooter") {
         window.location.href = "games/shooter/index.html";
     }
