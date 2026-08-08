@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #08080f;
+    color: white;
+    min-height: 100vh;
+}
+
+.game {
+    width: 92%;
+    max-width: 500px;
+    margin: auto;
+    padding: 25px 0;
+}
+
+
+/* BACK BUTTON */
+
+.back-button {
+    display: inline-block;
+
+    color: #888;
+    text-decoration: none;
+
+    font-size: 12px;
+    letter-spacing: 1px;
+
+    margin-bottom: 35px;
+
+    transition: 0.2s;
+}
+
+.back-button:hover {
+    color: white;
+}
+
+
+/* HEADER */
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border: 1px solid #3a3a50;
+    border-radius: 20px;
+
+    color: #888;
+
+    font-size: 10px;
+    letter-spacing: 1.5px;
+
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: clamp(35px, 10vw, 55px);
+    letter-spacing: -2px;
+    margin-bottom: 12px;
+}
+
+#turn {
+    color: #888;
+    font-size: 15px;
+}
+
+
+/* BOARD */
+
+.board {
+    width: min(90vw, 420px);
+    aspect-ratio: 1 / 1;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+
+/* CELL */
+
+.cell {
+    border: 1px solid #303044;
+    border-radius: 14px;
+
+    background: #11111c;
+
+    color: white;
+
+    font-size: clamp(45px, 15vw, 75px);
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.cell:hover {
+    background: #191927;
+    border-color: #555577;
+}
+
+.cell:active {
+    transform: scale(0.96);
+}
+
+
+/* RESULT */
+
+.result {
+    text-align: center;
+
+    min-height: 28px;
+
+    margin-top: 25px;
+
+    color: #6ee56e;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/* RESTART */
+
+.restart-button {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: white;
+    color: #08080f;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.restart-button:hover {
+    transform: scale(1.02);
+}
+
+.restart-button:active {
+    transform: scale(0.98);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .game {
+        width: 90%;
+        padding-top: 20px;
+    }
+
+    .back-button {
+        margin-bottom: 25px;
+    }
+
+    header {
+        margin-bottom: 25px;
+    }
+
+    .board {
+        gap: 8px;
+    }
+
+    .cell {
+        border-radius: 11px;
+    }
+  }
