@@ -1,3 +1,4 @@
+const boardElement = document.getElementById("board");
 const cells = document.querySelectorAll(".cell");
 const turnText = document.getElementById("turn");
 const resultText = document.getElementById("result");
@@ -16,37 +17,41 @@ const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
-
     [0, 3, 6],
     [1, 4, 7],
     [2, 5, 8],
-
     [0, 4, 8],
     [2, 4, 6]
 ];
 
+boardElement.addEventListener("click", function(event) {
 
-cells.forEach((cell, index) => {
+    const cell = event.target.closest(".cell");
 
-    cell.addEventListener("click", () => {
+    if (!cell) {
+        return;
+    }
 
-        if (!gameActive || board[index] !== "") {
-            return;
-        }
+    const index = Array.from(cells).indexOf(cell);
 
-        board[index] = currentPlayer;
-        cell.textContent = currentPlayer;
+    if (index === -1) {
+        return;
+    }
 
-        checkWinner();
+    if (!gameActive || board[index] !== "") {
+        return;
+    }
 
-    });
+    board[index] = currentPlayer;
+    cell.textContent = currentPlayer;
 
+    checkWinner();
 });
 
 
 function checkWinner() {
 
-    for (let combination of winningCombinations) {
+    for (const combination of winningCombinations) {
 
         const a = combination[0];
         const b = combination[1];
@@ -69,20 +74,19 @@ function checkWinner() {
         }
     }
 
-
     if (!board.includes("")) {
 
         resultText.textContent = "HASILNYA SERI!";
 
-        turnText.textContent = "Tidak ada pemenang";
+        turnText.textContent = "Game selesai";
 
         gameActive = false;
 
         return;
     }
 
-
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    currentPlayer =
+        currentPlayer === "X" ? "O" : "X";
 
     turnText.textContent =
         `Giliran Player ${currentPlayer}`;
@@ -103,11 +107,11 @@ function restartGame() {
     currentPlayer = "X";
     gameActive = true;
 
-    cells.forEach(cell => {
+    cells.forEach(function(cell) {
         cell.textContent = "";
     });
 
     turnText.textContent = "Giliran Player X";
 
     resultText.textContent = "";
-  }
+        }
