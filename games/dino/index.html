@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Runner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+    <div class="game-container">
+
+        <div class="top-bar">
+            <button class="back-button" onclick="goBack()">← Arcade</button>
+
+            <div class="score">
+                SCORE: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div id="game">
+            <div id="dino">🦖</div>
+
+            <div id="ground"></div>
+
+            <div id="game-over">
+                <h1>GAME OVER</h1>
+                <p>Score: <span id="final-score">0</span></p>
+                <button onclick="restartGame()">MAIN LAGI</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="jump-button">LOMPAT</button>
+        </div>
+
+        <p class="instruction">
+            Tekan SPACE / ↑ atau tombol LOMPAT
+        </p>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+                               </html>
