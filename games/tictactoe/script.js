@@ -6,11 +6,7 @@ const restartButton = document.getElementById("restart");
 let currentPlayer = "X";
 let gameActive = true;
 
-let board = [
-    "", "", "",
-    "", "", "",
-    "", ""
-];
+let board = ["", "", "", "", "", "", "", ""];
 
 const winningCombinations = [
     [0, 1, 2],
@@ -23,60 +19,24 @@ const winningCombinations = [
     [2, 4, 6]
 ];
 
+cells.forEach((cell) => {
 
-cells[0].onclick = function() {
-    makeMove(0);
-};
+    cell.addEventListener("click", () => {
 
-cells[1].onclick = function() {
-    makeMove(1);
-};
+        const index = Number(cell.dataset.index);
 
-cells[2].onclick = function() {
-    makeMove(2);
-};
+        if (!gameActive) return;
 
-cells[3].onclick = function() {
-    makeMove(3);
-};
+        if (board[index] !== "") return;
 
-cells[4].onclick = function() {
-    makeMove(4);
-};
+        board[index] = currentPlayer;
+        cell.textContent = currentPlayer;
 
-cells[5].onclick = function() {
-    makeMove(5);
-};
+        checkWinner();
 
-cells[6].onclick = function() {
-    makeMove(6);
-};
+    });
 
-cells[7].onclick = function() {
-    makeMove(7);
-};
-
-cells[8].onclick = function() {
-    makeMove(8);
-};
-
-
-function makeMove(index) {
-
-    if (!gameActive) {
-        return;
-    }
-
-    if (board[index] !== "") {
-        return;
-    }
-
-    board[index] = currentPlayer;
-
-    cells[index].textContent = currentPlayer;
-
-    checkWinner();
-}
+});
 
 
 function checkWinner() {
@@ -104,7 +64,6 @@ function checkWinner() {
         }
     }
 
-
     if (!board.includes("")) {
 
         resultText.textContent = "HASILNYA SERI!";
@@ -116,31 +75,27 @@ function checkWinner() {
         return;
     }
 
-
-    currentPlayer =
-        currentPlayer === "X" ? "O" : "X";
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
 
     turnText.textContent =
         "Giliran Player " + currentPlayer;
 }
 
 
-restartButton.addEventListener("click", function() {
+restartButton.addEventListener("click", () => {
 
-    board = [
-        "", "", "",
-        "", "", "",
-        "", ""
-    ];
+    board = ["", "", "", "", "", "", "", ""];
 
     currentPlayer = "X";
+
     gameActive = true;
 
-    cells.forEach(function(cell) {
+    cells.forEach((cell) => {
         cell.textContent = "";
     });
 
     turnText.textContent = "Giliran Player X";
 
     resultText.textContent = "";
+
 });
