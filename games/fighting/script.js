@@ -7,7 +7,7 @@ const MAX_HP = 100;
 const ACTIONS = {
     punch: { damage: 8, cooldown: 500 },
     kick: { damage: 15, cooldown: 1000 },
-    block: { cooldown: 2000, duration: 900 }
+    block: { cooldown: 2000, duration: 900, reduction: 0.25 }
 };
 
 let gameActive = true;
@@ -68,6 +68,12 @@ function showHitEffect(playerNum) {
     setTimeout(() => player.fighterEl.classList.remove("hit"), 250);
 }
 
+function showBlockedEffect(playerNum) {
+    const player = players[playerNum];
+    player.fighterEl.classList.add("blocked-hit");
+    setTimeout(() => player.fighterEl.classList.remove("blocked-hit"), 300);
+}
+
 function performAttack(playerNum, action) {
     if (!gameActive) return;
 
@@ -78,15 +84,23 @@ function performAttack(playerNum, action) {
     if (player.cooldowns[action]) return;
 
     const { damage, cooldown } = ACTIONS[action];
+    const actionLabel = action === "punch" ? "PUKULAN" : "TENDANGAN";
 
+    const wasBlocked = opponent.blocking;
     let finalDamage = damage;
-    if (opponent.blocking) {
-        finalDamage = Math.round(damage * 0.5);
+
+    if (wasBlocked) {
+        finalDamage = Math.max(1, Math.round(damage * ACTIONS.block.reduction));
     }
 
     opponent.hp = Math.max(0, opponent.hp - finalDamage);
     updateHpUI(opponentNum);
-    showHitEffect(opponentNum);
+
+    if (wasBlocked) {
+        showBlockedEffect(opponentNum);
+    } else {
+        showHitEffect(opponentNum);
+    }
 
     setCooldown(playerNum, action, cooldown);
 
@@ -95,7 +109,11 @@ function performAttack(playerNum, action) {
         return;
     }
 
-    statusText.textContent = `Player ${playerNum} pakai ${action === "punch" ? "PUKULAN" : "TENDANGAN"}!`;
+    if (wasBlocked) {
+        statusText.textContent = `Player ${opponentNum} BERHASIL BLOK ${actionLabel} Player ${playerNum}! (-${finalDamage})`;
+    } else {
+        statusText.textContent = `Player ${playerNum} pakai ${actionLabel}! (-${finalDamage})`;
+    }
 }
 
 function performBlock(playerNum) {
@@ -184,4 +202,4 @@ restartButton.addEventListener("click", () => {
     statusText.textContent = "Bertarung!";
     resultText.textContent = "";
 });
-      
+            
