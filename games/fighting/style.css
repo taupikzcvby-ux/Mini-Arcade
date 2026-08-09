@@ -161,6 +161,26 @@ h1 {
     animation: shake 0.25s;
 }
 
+.fighter.blocked-hit {
+    animation: block-flash 0.3s;
+}
+
+.fighter.blocked-hit .avatar {
+    animation: block-nudge 0.3s;
+}
+
+@keyframes block-flash {
+    0% { box-shadow: 0 0 0 1px #6ee56e inset; }
+    40% { box-shadow: 0 0 18px 2px #6ee56e inset, 0 0 14px rgba(110, 229, 110, 0.6); }
+    100% { box-shadow: 0 0 0 1px #6ee56e inset; }
+}
+
+@keyframes block-nudge {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
 .fighter.blocking {
     border-color: #6ee56e;
     box-shadow: 0 0 0 1px #6ee56e inset;
@@ -345,5 +365,5 @@ h1 {
         font-size: 10.5px;
         padding: 10px 4px;
     }
-  }
-  
+        }
+        
