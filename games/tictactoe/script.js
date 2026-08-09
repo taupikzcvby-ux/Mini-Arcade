@@ -6,7 +6,7 @@ const restartButton = document.getElementById("restart");
 let currentPlayer = "X";
 let gameActive = true;
 
-let board = ["", "", "", "", "", "", "", ""];
+let board = ["", "", "", "", "", "", "", "", ""];
 
 const winningCombinations = [
     [0, 1, 2],
@@ -84,7 +84,7 @@ function checkWinner() {
 
 restartButton.addEventListener("click", () => {
 
-    board = ["", "", "", "", "", "", "", ""];
+    board = ["", "", "", "", "", "", "", "", ""];
 
     currentPlayer = "X";
 
