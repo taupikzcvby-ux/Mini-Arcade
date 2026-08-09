@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Duel Arena - Mini Arcade</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="game">
+
+        <a
+            href="../../index.html"
+            class="back-button"
+        >
+            ← ARCADE
+        </a>
+
+        <header>
+            <div class="badge">
+                2 PLAYERS • LOCAL
+            </div>
+
+            <h1>DUEL ARENA</h1>
+
+            <p id="status">
+                Bertarung!
+            </p>
+        </header>
+
+
+        <section class="arena">
+
+            <div class="fighter" id="fighter1">
+                <div class="fighter-top">
+                    <span class="fighter-name">PLAYER 1</span>
+                    <span class="hp-value" id="hpValue1">100</span>
+                </div>
+                <div class="hp-bar">
+                    <div class="hp-fill p1" id="hpFill1"></div>
+                </div>
+                <div class="avatar" id="avatar1">🥊</div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div class="fighter" id="fighter2">
+                <div class="fighter-top">
+                    <span class="fighter-name">PLAYER 2</span>
+                    <span class="hp-value" id="hpValue2">100</span>
+                </div>
+                <div class="hp-bar">
+                    <div class="hp-fill p2" id="hpFill2"></div>
+                </div>
+                <div class="avatar" id="avatar2">🥋</div>
+            </div>
+
+        </section>
+
+
+        <div class="result" id="result"></div>
+
+
+        <section class="controls">
+
+            <div class="control-group">
+                <span class="control-label">PLAYER 1 · A / S / D</span>
+                <div class="buttons">
+                    <button class="action-btn punch" data-player="1" data-action="punch">PUKUL</button>
+                    <button class="action-btn kick" data-player="1" data-action="kick">TENDANG</button>
+                    <button class="action-btn block" data-player="1" data-action="block">BLOK</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <span class="control-label">PLAYER 2 · J / K / L</span>
+                <div class="buttons">
+                    <button class="action-btn punch" data-player="2" data-action="punch">PUKUL</button>
+                    <button class="action-btn kick" data-player="2" data-action="kick">TENDANG</button>
+                    <button class="action-btn block" data-player="2" data-action="block">BLOK</button>
+                </div>
+            </div>
+
+        </section>
+
+
+        <button
+            id="restart"
+            class="restart-button"
+        >
+            MAIN LAGI
+        </button>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+                      </html>
+          
