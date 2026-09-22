@@ -40,30 +40,231 @@ body {
 .score {
     font-size: 18px;
     font-weight: bold;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
 }
+
+.score .best {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8888aa;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   GAME STAGE
+========================= */
 
 #game {
     position: relative;
     width: 100%;
     height: 300px;
-    background: #f5f5f5;
     border-radius: 15px;
     overflow: hidden;
     border: 3px solid #29294a;
+    isolation: isolate;
 }
 
-/* Dino */
 
-#dino {
+/* SKY + DAY/NIGHT CYCLE */
+
+#sky {
     position: absolute;
-    left: 80px;
-    bottom: 45px;
-    font-size: 55px;
-    z-index: 5;
-    user-select: none;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(180deg, #8ed1f7 0%, #eaf7ff 100%);
 }
 
-/* Tanah */
+#sky::before,
+#sky::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+#sky::before {
+    /* sunset / sunrise glow */
+    background: linear-gradient(180deg, #ff9a5a 0%, #ffd39a 100%);
+    animation: sunset-glow 36s linear infinite;
+}
+
+#sky::after {
+    /* deep night */
+    background: linear-gradient(180deg, #0b1030 0%, #1b1f45 100%);
+    animation: night-fall 36s linear infinite;
+}
+
+@keyframes sunset-glow {
+    0%, 15% { opacity: 0; }
+    22%     { opacity: 1; }
+    30%     { opacity: 0.3; }
+    38%, 62%{ opacity: 0; }
+    70%     { opacity: 0.3; }
+    78%     { opacity: 1; }
+    85%, 100% { opacity: 0; }
+}
+
+@keyframes night-fall {
+    0%, 20% { opacity: 0; }
+    35%     { opacity: 1; }
+    65%     { opacity: 1; }
+    80%, 100% { opacity: 0; }
+}
+
+#stars {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    background-image:
+        radial-gradient(1.5px 1.5px at 10% 20%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 25% 55%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 40% 15%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 55% 40%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 68% 65%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 80% 25%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 92% 50%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 15% 75%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 48% 80%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 88% 78%, #fff 100%, transparent);
+    background-repeat: no-repeat;
+
+    animation: night-fall 36s linear infinite;
+}
+
+.celestial {
+    position: absolute;
+    top: 8%;
+    font-size: 26px;
+    z-index: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+#sun {
+    animation:
+        sun-move 36s linear infinite,
+        sun-opacity 36s linear infinite;
+}
+
+#moon {
+    animation:
+        moon-move 36s linear infinite,
+        moon-opacity 36s linear infinite;
+}
+
+@keyframes sun-move {
+    0%   { left: -8%; }
+    22%  { left: 92%; }
+    100% { left: 92%; }
+}
+
+@keyframes sun-opacity {
+    0%, 20% { opacity: 1; }
+    26%     { opacity: 0; }
+    74%     { opacity: 0; }
+    80%     { left: -8%; opacity: 1; }
+    100%    { opacity: 1; }
+}
+
+@keyframes moon-move {
+    0%, 24%  { left: -8%; }
+    50%      { left: 92%; }
+    76%, 100%{ left: 92%; }
+}
+
+@keyframes moon-opacity {
+    0%, 24% { opacity: 0; }
+    30%     { opacity: 1; }
+    70%     { opacity: 1; }
+    76%     { opacity: 0; }
+    100%    { opacity: 0; }
+}
+
+
+/* NIGHT TINT OVER GAMEPLAY LAYER */
+
+.night-tint {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    background: #0a0a20;
+    opacity: 0;
+    pointer-events: none;
+    animation: tint-cycle 36s linear infinite;
+}
+
+@keyframes tint-cycle {
+    0%, 20% { opacity: 0; }
+    35%     { opacity: 0.4; }
+    65%     { opacity: 0.4; }
+    80%, 100% { opacity: 0; }
+}
+
+
+/* CLOUDS */
+
+.clouds {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud1 {
+    width: 50px;
+    height: 16px;
+    top: 15%;
+    animation: drift 22s linear infinite;
+}
+
+.cloud1::before { width: 22px; height: 22px; top: -12px; left: 6px; }
+.cloud1::after  { width: 16px; height: 16px; top: -8px; left: 26px; }
+
+.cloud2 {
+    width: 36px;
+    height: 12px;
+    top: 32%;
+    animation: drift 16s linear infinite;
+    animation-delay: -6s;
+}
+
+.cloud2::before { width: 16px; height: 16px; top: -8px; left: 4px; }
+.cloud2::after  { width: 12px; height: 12px; top: -6px; left: 18px; }
+
+.cloud3 {
+    width: 28px;
+    height: 10px;
+    top: 8%;
+    animation: drift 28s linear infinite;
+    animation-delay: -14s;
+}
+
+.cloud3::before { width: 12px; height: 12px; top: -6px; left: 3px; }
+.cloud3::after  { width: 10px; height: 10px; top: -5px; left: 14px; }
+
+@keyframes drift {
+    from { left: 110%; }
+    to   { left: -20%; }
+}
+
+
+/* GROUND */
 
 #ground {
     position: absolute;
@@ -72,9 +273,223 @@ body {
     width: 100%;
     height: 45px;
     background: #333;
+    z-index: 3;
 }
 
-/* Game Over */
+#ground::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 4px;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #666 0px,
+        #666 18px,
+        transparent 18px,
+        transparent 36px
+    );
+    animation: ground-scroll var(--ground-duration, 0.6s) linear infinite;
+}
+
+@keyframes ground-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-36px); }
+}
+
+
+/* =========================
+   DINO
+========================= */
+
+#dino {
+    position: absolute;
+    left: 80px;
+    bottom: 45px;
+    width: 56px;
+    height: 58px;
+    z-index: 7;
+    will-change: transform;
+}
+
+.dino-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom center;
+}
+
+.dino-body {
+    position: absolute;
+    left: 8px;
+    bottom: 14px;
+    width: 32px;
+    height: 24px;
+    background: linear-gradient(160deg, #7fd06f, #4f9c46);
+    border-radius: 14px 16px 10px 14px;
+    box-shadow: inset -4px -4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dino-head {
+    position: absolute;
+    left: 26px;
+    bottom: 28px;
+    width: 22px;
+    height: 20px;
+    background: linear-gradient(160deg, #7fd06f, #4f9c46);
+    border-radius: 10px 10px 6px 6px;
+    box-shadow: inset -3px -3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.dino-eye {
+    position: absolute;
+    top: 8px;
+    left: 21px;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.dino-eye::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    width: 3px;
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 50%;
+}
+
+.dino-mouth {
+    position: absolute;
+    bottom: 1px;
+    left: 8px;
+    width: 12px;
+    height: 3px;
+    background: #3c7535;
+    border-radius: 2px;
+}
+
+.dino-tail {
+    position: absolute;
+    left: -8px;
+    bottom: 18px;
+    width: 22px;
+    height: 12px;
+    background: linear-gradient(160deg, #7fd06f, #4f9c46);
+    border-radius: 10px 3px 3px 10px;
+    transform: rotate(-16deg);
+    z-index: -1;
+}
+
+.dino-arm {
+    position: absolute;
+    left: 30px;
+    bottom: 18px;
+    width: 9px;
+    height: 4px;
+    background: #4f9c46;
+    border-radius: 2px;
+    transform: rotate(25deg);
+}
+
+.dino-leg {
+    position: absolute;
+    bottom: 0;
+    width: 9px;
+    height: 16px;
+    background: #4a8b40;
+    border-radius: 0 0 4px 4px;
+    transform-origin: top center;
+}
+
+.leg-back  { left: 13px; }
+.leg-front { left: 25px; }
+
+
+/* running animation */
+
+.dino-inner.running .leg-back {
+    animation: leg-swing-a var(--leg-duration, 0.26s) linear infinite;
+}
+
+.dino-inner.running .leg-front {
+    animation: leg-swing-b var(--leg-duration, 0.26s) linear infinite;
+}
+
+.dino-inner.running .dino-body,
+.dino-inner.running .dino-head {
+    animation: body-bob var(--leg-duration, 0.26s) linear infinite;
+}
+
+@keyframes leg-swing-a {
+    0%, 100% { transform: rotate(-24deg); }
+    50%      { transform: rotate(24deg); }
+}
+
+@keyframes leg-swing-b {
+    0%, 100% { transform: rotate(24deg); }
+    50%      { transform: rotate(-24deg); }
+}
+
+@keyframes body-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-2px); }
+}
+
+/* jumping: freeze legs mid-swing, tuck slightly */
+
+.dino-inner.jumping .dino-leg {
+    animation-play-state: paused !important;
+    transform: rotate(10deg);
+}
+
+.dino-inner.jumping .dino-body,
+.dino-inner.jumping .dino-head {
+    animation-play-state: paused !important;
+}
+
+/* landing squash & stretch */
+
+.dino-inner.landing {
+    animation: squash 0.16s ease;
+}
+
+@keyframes squash {
+    0%   { transform: scaleY(0.78) scaleY(1); }
+    55%  { transform: scaleY(1.1); }
+    100% { transform: scaleY(1); }
+}
+
+
+/* =========================
+   CACTUS (created via JS)
+========================= */
+
+.cactus {
+    position: absolute;
+    bottom: 42px;
+    z-index: 5;
+}
+
+.cactus-body {
+    position: relative;
+    background: linear-gradient(160deg, #4fae52, #2f7d38);
+    border-radius: 6px;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cactus-arm {
+    position: absolute;
+    background: linear-gradient(160deg, #4fae52, #2f7d38);
+    border-radius: 5px;
+}
+
+
+/* GAME OVER */
 
 #game-over {
     position: absolute;
@@ -93,7 +508,13 @@ body {
 }
 
 #game-over p {
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+}
+
+.new-best {
+    color: #ffd166;
+    font-weight: bold;
+    display: none;
 }
 
 #game-over button {
@@ -105,9 +526,11 @@ body {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 12px;
 }
 
-/* Tombol HP */
+
+/* CONTROLS */
 
 .controls {
     margin-top: 20px;
@@ -136,7 +559,10 @@ body {
     font-size: 14px;
 }
 
-/* HP */
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 600px) {
 
@@ -146,8 +572,19 @@ body {
 
     #dino {
         left: 40px;
-        font-size: 45px;
+        width: 46px;
+        height: 48px;
+        transform-origin: bottom center;
     }
+
+    .dino-body { width: 26px; height: 20px; left: 7px; bottom: 12px; }
+    .dino-head { width: 18px; height: 16px; left: 21px; bottom: 23px; }
+    .dino-eye  { left: 17px; top: 6px; width: 6px; height: 6px; }
+    .dino-tail { width: 18px; height: 10px; left: -6px; bottom: 15px; }
+    .dino-arm  { left: 24px; bottom: 15px; }
+    .dino-leg  { width: 7px; height: 13px; }
+    .leg-back  { left: 10px; }
+    .leg-front { left: 20px; }
 
     .top-bar {
         margin-bottom: 10px;
@@ -157,7 +594,33 @@ body {
         font-size: 15px;
     }
 
+    .score .best {
+        font-size: 10px;
+    }
+
     #jump-button {
         width: 160px;
+    }
+
+    .celestial {
+        font-size: 20px;
+    }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    #sky::before,
+    #sky::after,
+    #stars,
+    #sun,
+    #moon,
+    .cloud,
+    .night-tint,
+    #ground::before {
+        animation: none !important;
     }
 }
